@@ -5,16 +5,37 @@
 
    The type never moves and is always drawn as type. Word by word, in reading
    order, it dissolves into fine ink dust that drifts to its place; at the end
-   of the cycle the dust drifts home and the words come back one at a time. */
+   of the cycle the dust drifts home and the words come back one at a time.
+
+   The sentence follows the page's language. In Chinese it is the line it was
+   borrowed from, turned the same way: 给语言以世界，而不是给世界以语言。 */
 (function () {
   var canvas = document.getElementById('glyph');
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext('2d');
   var INK = '#1a1a19';
-  var LINES = ['give language', 'a world,', 'not the world', 'more language.'];
-  var FACE = '700 80px "Roboto Slab"';
-  var FONT = '"Roboto Slab", Georgia, "Times New Roman", serif';
-  var PITCH = 1.02;                             // line pitch, in ems
+  var root = document.documentElement;
+  var TEXT = {
+    en: {
+      lines: ['give language', 'a world,', 'not the world', 'more language.'],
+      face: '"Roboto Slab"',
+      font: '"Roboto Slab", Georgia, "Times New Roman", serif',
+      pitch: 1.02,                              // line pitch, in ems
+      words: /[A-Za-z]+|[^A-Za-z\s]/g,
+      small: /^(a|not|the|more)$/i,
+      label: 'The sentence: give language a world, not the world more language. Shown as writing, as tokens, as points in a space and as a small network'
+    },
+    zh: {
+      lines: ['给语言', '以世界，', '而不是', '给世界', '以语言。'],
+      face: '"Noto Serif SC"',
+      font: '"Noto Serif SC", "Songti SC", "STSong", serif',
+      pitch: 1.2,
+      words: /语言|世界|不是|\S/g,
+      small: /^(给|以|而|不是)$/,
+      label: '一句话：给语言以世界，而不是给世界以语言。依次显示为文字、词元、空间中的点和一个小网络'
+    }
+  };
+  var T = TEXT.en;
   // where each kind of token settles in the third state: the small words
   // of grammar in one place, the words that carry the meaning in another
   var HOME = { small: [.3, .32], full: [.64, .66], mark: [.82, .24] };
@@ -38,17 +59,23 @@
   }
 
   function kindOf(word) {
-    if (!/[a-z]/i.test(word)) return 'mark';
-    return /^(a|not|the|more)$/i.test(word) ? 'small' : 'full';
+    if (!/[A-Za-z一-鿿]/.test(word)) return 'mark';
+    return T.small.test(word) ? 'small' : 'full';
   }
 
   function face(c) {
     c.textAlign = 'left';
     c.textBaseline = 'alphabetic';
-    c.font = '700 ' + fs + 'px ' + FONT;
+    c.font = '700 ' + fs + 'px ' + T.font;
+  }
+
+  function pick() {
+    T = TEXT[root.lang === 'zh' ? 'zh' : 'en'];
+    canvas.setAttribute('aria-label', T.label);
   }
 
   function build() {
+    pick();
     size = canvas.clientWidth;
     if (!size) return false;
     dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -60,7 +87,8 @@
     var o = off.getContext('2d');
 
     // the largest size at which the block fits the square
-    o.font = '700 100px ' + FONT;
+    var LINES = T.lines, PITCH = T.pitch;
+    o.font = '700 100px ' + T.font;
     var widest = 0;
     LINES.forEach(function (l) { widest = Math.max(widest, o.measureText(l).width); });
     var first = o.measureText(LINES[0]), last = o.measureText(LINES[LINES.length - 1]);
@@ -75,7 +103,7 @@
     tokens = [];
     var seen = {}, spot = {}, padX = .07 * fs, padY = .03 * fs;
     LINES.forEach(function (line, li) {
-      var re = /[A-Za-z]+|[^A-Za-z\s]/g, m, prev = null;
+      var re = new RegExp(T.words.source, 'g'), m, prev = null;
       while ((m = re.exec(line))) {
         var kind = kindOf(m[0]);
         var word = m[0].toLowerCase();
@@ -281,11 +309,27 @@
     if (build() && reduce) draw(0, 0, 0);
   }
 
+  // the face for the sentence in the current language; Chinese faces arrive in pieces,
+  // so ask for exactly the characters the sentence uses
+  function loadFace() {
+    pick();
+    return document.fonts.load('700 80px ' + T.face, T.lines.join(''));
+  }
+
   // wait briefly for the lettering face, then start with whatever is there
   if (document.fonts && document.fonts.load) {
-    document.fonts.load(FACE).then(refresh, begin);
+    loadFace().then(refresh, begin);
     setTimeout(begin, 1200);
   } else begin();
+
+  // the reader switched language: redraw the sentence, again once its face is in
+  if ('MutationObserver' in window) {
+    new MutationObserver(function () {
+      if (!started) return;
+      refresh();
+      if (document.fonts && document.fonts.load) loadFace().then(refresh, function () {});
+    }).observe(root, { attributes: true, attributeFilter: ['lang'] });
+  }
 
   var timer = null;
   window.addEventListener('resize', function () {
