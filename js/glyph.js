@@ -7,8 +7,10 @@
    order, it dissolves into fine ink dust that drifts to its place; at the end
    of the cycle the dust drifts home and the words come back one at a time.
 
-   The sentence follows the page's language. In Chinese it is the line it was
-   borrowed from, turned the same way: 给语言以世界，而不是给世界以语言。 */
+   The sentence follows the page's language. It borrows the shape of a line
+   from The Three-Body Problem (给岁月以文明，而不是给文明以岁月): give
+   language a world to act in, rather than give the world more text.
+   In Chinese: 给语言以世界，而不是给世界以更多语言。 */
 (function () {
   var canvas = document.getElementById('glyph');
   if (!canvas || !canvas.getContext) return;
@@ -26,13 +28,13 @@
       label: 'The sentence: give language a world, not the world more language. Shown as writing, as tokens, as points in a space and as a small network'
     },
     zh: {
-      lines: ['给语言', '以世界，', '而不是', '给世界', '以语言。'],
+      lines: ['给语言', '以世界，', '而不是', '给世界', '以更多语言。'],
       face: '"Noto Serif SC"',
       font: '"Noto Serif SC", "Songti SC", "STSong", serif',
       pitch: 1.2,
-      words: /语言|世界|不是|\S/g,
-      small: /^(给|以|而|不是)$/,
-      label: '一句话：给语言以世界，而不是给世界以语言。依次显示为文字、词元、空间中的点和一个小网络'
+      words: /语言|世界|不是|更多|\S/g,
+      small: /^(给|以|而|不是|更多)$/,
+      label: '一句话：给语言以世界，而不是给世界以更多语言。依次显示为文字、词元、空间中的点和一个小网络'
     }
   };
   var T = TEXT.en;
@@ -123,6 +125,8 @@
         };
         t.y0 = base - (box.actualBoundingBoxAscent || .7 * fs);
         t.y1 = base + (box.actualBoundingBoxDescent || 0);
+        // punctuation: frame the ink, not the full-width cell it sits in
+        if (kind === 'mark' && box.actualBoundingBoxRight) t.x1 = Math.max(t.x0 + 2, t.x0 + box.actualBoundingBoxRight);
         // the frame drawn round it; neighbours that touch share an edge
         t.bx0 = t.x0 - padX; t.bx1 = t.x1 + padX; t.by0 = t.y0 - padY; t.by1 = t.y1 + padY;
         if (prev && t.x0 - prev.x1 < 2 * padX) prev.bx1 = t.bx0 = (prev.x1 + t.x0) / 2;
