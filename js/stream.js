@@ -55,11 +55,21 @@
     return out;
   }
 
+  // Text written for the language that is not showing is left alone; if the
+  // reader switches language later, that text simply appears, already written.
+  function otherLanguage(node) {
+    for (var el = node.parentElement; el && el !== root; el = el.parentElement) {
+      if (el.hasAttribute('lang')) return el.getAttribute('lang') !== root.getAttribute('lang');
+    }
+    return false;
+  }
+
   function tokenize(block) {
     var walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
     var nodes = [];
     while (walker.nextNode()) {
-      if (walker.currentNode.nodeValue.trim()) nodes.push(walker.currentNode);
+      var n = walker.currentNode;
+      if (n.nodeValue.trim() && !otherLanguage(n)) nodes.push(n);
     }
     var tokens = [];
     nodes.forEach(function (node) {

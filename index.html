@@ -4,21 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sipeng Chen</title>
-<meta name="description" content="Sipeng Chen works on language agents: what they should remember, how long they should think, and when they should answer.">
-<script>document.documentElement.classList.add('will-stream')</script>
+<meta name="description" content="Sipeng Chen builds language agents that reach more of the world.">
+<script>
+(function (r) {
+  var l = null;
+  try { l = localStorage.getItem('lang'); } catch (e) {}
+  r.lang = l === 'zh' ? 'zh' : 'en';
+  r.classList.add('will-stream');
+})(document.documentElement);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=7">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto+Slab:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=8">
 </head>
 <body>
 
 <header class="top home">
   <nav class="nav" aria-label="Main">
-    <a href="#about">About</a>
-    <a href="#research">Research</a>
-    <a href="#news">News</a>
-    <a href="papers.html">Papers</a>
+    <a href="#about"><span lang="en">About</span><span lang="zh">关于</span></a>
+    <a href="#research"><span lang="en">Research</span><span lang="zh">研究</span></a>
+    <a href="#news"><span lang="en">News</span><span lang="zh">动态</span></a>
+    <a href="papers.html"><span lang="en">Papers</span><span lang="zh">论文</span></a>
+    <button class="lang" type="button" aria-label="切换到中文"><span data-to="en">EN</span><span class="slash" aria-hidden="true">/</span><span data-to="zh">中</span></button>
   </nav>
 </header>
 
@@ -67,7 +75,7 @@
 </svg>
 <!-- sign:end -->
     </h1>
-    <p class="tagline">Building language agents that reach more of the world.</p>
+    <p class="tagline"><span lang="en">Building language agents that reach more of the world.</span><span lang="zh">让语言智能体走进更广阔的世界。</span></p>
   </div>
 
   <figure class="art">
@@ -81,18 +89,20 @@
   </figure>
 
   <div class="ruler">
-    <span>2022</span><span>2024</span><span>2026</span><span class="far">2028</span><span class="note">Seeking Ph.D. opportunities</span>
+    <span>2022</span><span>2024</span><span>2026</span><span class="far">2028</span><span class="note"><span lang="en">Seeking Ph.D. opportunities</span><span lang="zh">寻找博士机会</span></span>
   </div>
 </div>
 
 <main>
   <section class="section" id="about">
-    <h2>About</h2>
+    <h2><span lang="en">About</span><span lang="zh">关于</span></h2>
     <div data-stream>
-      <p>I am a master's student in computer science at Northwestern University, working with Prof. Xiao Luo (UW–Madison) and Prof. Hang Zhou (UNC–Chapel Hill). I received my B.S. in Computer Science from the University of Wisconsin–Madison in May 2026.</p>
-      <p>I want language agents to be useful well beyond the few places they work today. A model that can read and reason should be able to act: in a browser, in a kitchen, on a live video stream, beside a doctor reading a scan. Most of what stops it is practical: too little memory, too little compute, too little time. I work on removing those obstacles one at a time, so that agents can be taken into more domains.</p>
+      <p lang="en">I am a master's student in computer science at Northwestern University, working with Prof. Xiao Luo (UW–Madison) and Prof. Hang Zhou (UNC–Chapel Hill). I received my B.S. in Computer Science from the University of Wisconsin–Madison in May 2026.</p>
+      <p lang="en">I want language agents to be useful well beyond the few places they work today. A model that can read and reason should be able to act: in a browser, in a kitchen, on a live video stream, beside a doctor reading a scan. Most of what stops it is practical: too little memory, too little compute, too little time. I work on removing those obstacles one at a time, so that agents can be taken into more domains.</p>
+      <p lang="zh">我目前在西北大学攻读计算机科学硕士，与 Xiao Luo 教授（威斯康星大学麦迪逊分校）和 Hang Zhou 教授（北卡罗来纳大学教堂山分校）合作。2026 年 5 月，我从威斯康星大学麦迪逊分校本科毕业，获计算机科学学士学位。</p>
+      <p lang="zh">我希望语言智能体能走出今天这几个少数场景，真正派上用场。一个能阅读、能推理的模型，也应该能行动：在浏览器里，在厨房里，在实时视频流上，在读片的医生身边。挡住它的多半是现实的限制：记忆太少，算力太少，时间太少。我做的事，是把这些障碍一个一个拿掉，让智能体走进更多领域。</p>
       <p class="links">
-        <a href="mailto:en2209260768@gmail.com">Email</a>
+        <a href="mailto:en2209260768@gmail.com"><span lang="en">Email</span><span lang="zh">邮箱</span></a>
         <a href="https://github.com/UikaMisumi">GitHub</a>
         <a href="https://scholar.google.com/citations?user=1ZCIICQAAAAJ">Google Scholar</a>
         <a href="https://www.linkedin.com/in/%E6%80%9D%E6%9C%8B-%E9%99%88-03b0b5333/">LinkedIn</a>
@@ -101,52 +111,53 @@
   </section>
 
   <section class="section" id="research">
-    <h2>Research</h2>
-    <p class="lead" data-stream>Agents stay out of most places they could help because they need large models, spend compute freely, and cannot keep up with a world that does not pause. My recent work takes these in turn.</p>
+    <h2><span lang="en">Research</span><span lang="zh">研究</span></h2>
+    <p class="lead" data-stream><span lang="en">Agents stay out of most places they could help because they need large models, spend compute freely, and cannot keep up with a world that does not pause. My recent work takes these in turn.</span><span lang="zh">智能体进不了许多本可以帮上忙的地方，是因为它们离不开大模型，花算力毫无节制，也跟不上一个从不暂停的世界。我最近的工作依次处理这几件事。</span></p>
 
     <article class="work">
       <img src="assets/fig-remember.svg" width="320" height="200" alt="">
       <div data-stream>
-        <h3>Small models</h3>
-        <p>Small agents lose track of what happened only a few steps ago. This work asks how they can carry what matters forward on their own.</p>
-        <p class="ref"><span class="title">Beyond the History Window: Window-Informed Harness Distillation for Small LLM Agents</span><em>In preparation.</em></p>
+        <h3><span lang="en">Small models</span><span lang="zh">小模型</span></h3>
+        <p><span lang="en">Small agents lose track of what happened only a few steps ago. This work asks how they can carry what matters forward on their own.</span><span lang="zh">小型智能体会忘掉仅仅几步之前发生的事。这项工作关心的是，它们如何靠自己把重要的东西带下去。</span></p>
+        <p class="ref"><span class="title">Beyond the History Window: Window-Informed Harness Distillation for Small LLM Agents</span><em><span lang="en">In preparation.</span><span lang="zh">撰写中。</span></em></p>
       </div>
     </article>
 
     <article class="work">
       <img src="assets/fig-think.svg" width="320" height="200" alt="">
       <div data-stream>
-        <h3>Limited compute</h3>
-        <p>Reasoning models spend very different amounts of thought on different questions. This work is about spending a fixed budget of thinking where it helps most.</p>
-        <p class="ref"><span class="title">Opening-oriented Cost Regression with Multi-student Probing for LLM Thinking Budget Control</span><em>Under review.</em></p>
+        <h3><span lang="en">Limited compute</span><span lang="zh">有限算力</span></h3>
+        <p><span lang="en">Reasoning models spend very different amounts of thought on different questions. This work is about spending a fixed budget of thinking where it helps most.</span><span lang="zh">推理模型在不同问题上花的思考量差别很大。这项工作关心的是，如何把有限的思考预算花在最有用的地方。</span></p>
+        <p class="ref"><span class="title">Opening-oriented Cost Regression with Multi-student Probing for LLM Thinking Budget Control</span><em><span lang="en">Under review.</span><span lang="zh">审稿中。</span></em></p>
       </div>
     </article>
 
     <article class="work">
       <img src="assets/fig-answer.svg" width="320" height="200" alt="">
       <div data-stream>
-        <h3>Real time</h3>
-        <p>A model watching a live stream cannot keep every frame, and cannot wait for the end before it speaks. This work is about understanding video as it arrives.</p>
-        <p class="ref"><span class="title">CENTRE: Calibrated Response Trigger with Multi-resolution Retention for Online Video Understanding</span><em>Under review.</em></p>
+        <h3><span lang="en">Real time</span><span lang="zh">实时</span></h3>
+        <p><span lang="en">A model watching a live stream cannot keep every frame, and cannot wait for the end before it speaks. This work is about understanding video as it arrives.</span><span lang="zh">看实时视频流的模型存不下每一帧，也不能等到结束才开口。这项工作关心的是，如何在视频到来的同时理解它。</span></p>
+        <p class="ref"><span class="title">CENTRE: Calibrated Response Trigger with Multi-resolution Retention for Online Video Understanding</span><em><span lang="en">Under review.</span><span lang="zh">审稿中。</span></em></p>
       </div>
     </article>
 
-    <p><a href="papers.html">Full list of papers</a></p>
+    <p><a href="papers.html"><span lang="en">Full list of papers</span><span lang="zh">全部论文</span></a></p>
   </section>
 
   <section class="section" id="news">
-    <h2>News</h2>
+    <h2><span lang="en">News</span><span lang="zh">动态</span></h2>
     <ul class="news" data-stream>
-      <li><time>Nov 2026</time><span>Our paper on evaluating uncertainty quantification for LLM-based recommender systems was accepted to TMLR.</span></li>
-      <li><time>Sep 2026</time><span>Started the M.S. in Computer Science at Northwestern University.</span></li>
-      <li><time>May 2026</time><span>Graduated from the University of Wisconsin–Madison with a B.S. in Computer Science.</span></li>
+      <li><time datetime="2026-11"><span lang="en">Nov 2026</span><span lang="zh">2026.11</span></time><span><span lang="en">Our paper on evaluating uncertainty quantification for LLM-based recommender systems was accepted to TMLR.</span><span lang="zh">我们关于评估基于大语言模型的推荐系统中不确定性量化的论文被 TMLR 接收。</span></span></li>
+      <li><time datetime="2026-09"><span lang="en">Sep 2026</span><span lang="zh">2026.09</span></time><span><span lang="en">Started the M.S. in Computer Science at Northwestern University.</span><span lang="zh">开始在西北大学攻读计算机科学硕士。</span></span></li>
+      <li><time datetime="2026-05"><span lang="en">May 2026</span><span lang="zh">2026.05</span></time><span><span lang="en">Graduated from the University of Wisconsin–Madison with a B.S. in Computer Science.</span><span lang="zh">从威斯康星大学麦迪逊分校本科毕业，获计算机科学学士学位。</span></span></li>
     </ul>
   </section>
 </main>
 
 <footer>© 2026 Sipeng Chen</footer>
 
-<script src="js/glyph.js?v=7"></script>
-<script src="js/stream.js?v=7"></script>
+<script src="js/lang.js?v=8"></script>
+<script src="js/glyph.js?v=8"></script>
+<script src="js/stream.js?v=8"></script>
 </body>
 </html>

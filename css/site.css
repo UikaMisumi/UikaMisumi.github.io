@@ -4,7 +4,7 @@
   --body: #55554f;
   --mute: #8c8c85;
   --rule: #d9d9d2;
-  --head: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --head: "Montserrat", "Noto Serif SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --text: "Roboto Slab", "Noto Serif SC", "Songti SC", Georgia, serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
@@ -44,6 +44,33 @@ a:hover { text-decoration-color: var(--ink); }
   text-transform: uppercase;
 }
 .nav a { color: var(--ink); text-decoration: none; }
+
+/* EN / 中, the last item of the nav, set apart by a hairline */
+.nav { align-items: center; }
+.nav .lang {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .4em;
+  margin: 0 0 0 -6px;
+  padding: 0 0 0 24px;
+  border: 0;
+  border-left: 1px solid var(--rule);
+  background: none;
+  color: var(--mute);
+  font: inherit;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+.nav .lang .slash { color: var(--rule); }
+.nav .lang [data-to] { transition: color .2s ease; }
+.nav .lang:hover [data-to] { color: var(--body); }
+:root[lang="en"] .nav .lang [data-to="en"],
+:root[lang="zh"] .nav .lang [data-to="zh"] { color: var(--ink); }
+.nav .lang:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+/* only the chosen language shows */
+:root[lang="en"] body [lang="zh"],
+:root[lang="zh"] body [lang="en"] { display: none !important; }
 .nav a:hover, .nav a[aria-current] { color: var(--mute); }
 
 /* ---------- page header ---------- */
@@ -279,6 +306,8 @@ footer {
   .top.home { padding-right: 16px; }
   .top .brand { width: 120px; }
   .top .nav { gap: 16px; font-size: 11px; }
+  .top { flex-wrap: wrap; row-gap: 14px; }
+  .nav .lang { margin-left: -4px; padding-left: 14px; }
   .poster { padding: 32px 16px 0; }
   .stages { font-size: 8.5px; }
   .ruler { gap: 8px 16px; margin-top: 24px; }
